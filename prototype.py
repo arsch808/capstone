@@ -104,7 +104,7 @@ def main():
         factsheet = create_factsheet(w, d, s, a)
         displaysheet = create_displaysheet(factsheet)
         print("Hab Score:", score)
-        print(factsheet)
+        #print(factsheet)
         print("Display Facts:", displaysheet)
 
 main()
