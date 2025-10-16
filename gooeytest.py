@@ -49,6 +49,31 @@ title_label = pygame_gui.elements.UILabel(
 
 textRect = pygame.Rect((640, 240), (620,200))
 
+size_label = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((20, 625), (200, 25)),
+    text='label',
+    manager=manager,
+    object_id='param_label')
+
+dist_label = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((330, 625), (200, 25)),
+    text='label',
+    manager=manager,
+    object_id='param_label')
+
+dens_label = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((690, 625), (200, 25)),
+    text='label',
+    manager=manager,
+    object_id='param_label')
+
+temp_label = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((1010, 625), (200, 25)),
+    text='label',
+    manager=manager,
+    object_id='param_label')
+
+
 #set_image(new_image: ~pygame.surface.Surface) allows image to change during runtime (screensaver)
 
 
