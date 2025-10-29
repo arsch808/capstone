@@ -1,4 +1,5 @@
 import csv
+import random
 
 #defining the main 4x4 attributes
 #STRINGS
@@ -17,12 +18,14 @@ hab_distance = (1, 3, 2, 1)
 hab_size = (1, 3, 3, 2)
 hab_density = (1, 2, 3, 1)
 
-
+target = []
 def main():
     d = input("Distance:")
     p = input("Density:")
     s = input("Size:")
     t = input("Temp:")
+    global target
+    target = [d,p,s,t]
 
     dscore = pscore = sscore = tscore = 0
     dlabel = plabel = slabel = tlabel = "Invalid"
@@ -102,22 +105,33 @@ def main():
 
 main()
 
-def compare(file, target):
-    best_match_array = None
-    max_matches = -1
-    target = [d, p, s, t]
 
-    with open('ss_test.csv', 'r', newline='') as file:
-        reader = csv.reader(file)
+
+def compare(filename, target):
+    best_match_arrays = []
+    max_matches = -1
+    
+    with open(filename, 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
         for row in reader:
             current_matches = 0
-            for item in target:
-                if item in row:
+            # Only compare elements at indices 1,2,3,4 (rows 2,3,4,5)
+            for i in range(0, min(len(target), len(row))):
+                if target[i] == row[i]:
                     current_matches += 1
 
             if current_matches > max_matches:
                 max_matches = current_matches
-                best_match_array = row
-    return best_match_array
+                best_match_arrays = [row]  # Reset list with new best match
+            elif current_matches == max_matches:
+                best_match_arrays.append(row)  # Add to list of equally good matches
 
-compare(file, target)
+        # Choose random match from best matches
+        if best_match_arrays:
+            best_match_array = random.choice(best_match_arrays)
+            print("Best matching row from CSV:", best_match_array[0])
+        else:
+            print("No matching row found in the CSV file.")
+
+compare('ss_test.csv', target)
+
