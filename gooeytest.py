@@ -9,70 +9,110 @@ is_running = True
 
 
 #default window surface. everything should be attached to here unless otherwise stated
-screen = pygame.display.set_mode((1280, 720))
-manager = pygame_gui.UIManager((1280, 720))
+screen = pygame.display.set_mode((1920, 1080))
+manager = pygame_gui.UIManager((1920, 1080))
 
 #create a display background
 background = pygame.image.load('stars.bmp').convert() #placeholder background, convert() makes the image easier to handle
 cursor = pygame.image.load('PLACEHOLDER_cursor.bmp').convert_alpha()
 
 
+
 #inputs
 sizeslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
-    ((20, 650), (200, 25)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
+    ((20, 200), (450, 30)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
 distslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
-    ((330, 650), (200, 25)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
+    ((480, 200), (450, 30)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
 denslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
-    ((690, 650), (200, 25)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
+    ((960, 200), (450, 30)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
 tempslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
-    ((1010 , 650), (200, 25)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
+    ((1440, 200), (450, 30)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
 
 #display image
 mars = pygame.image.load('mars.bmp').convert()
 
 image = pygame_gui.elements.ui_image.UIImage(
-    ((25, 100), (500, 500)), mars)
-
-#"checkbox" for if a parameter matches
-dist_checkbox = pygame.Rect((640, 120), (150, 100))
-size_checkbox = pygame.Rect((790, 120), (150, 100))
-dens_checkbox = pygame.Rect((940, 120), (150, 100))
-temp_checkbox = pygame.Rect((1090, 120), (150, 100))
+    ((120, 400), (600, 600)), mars)
 
 
-#text 
+#text
+
 title_label = pygame_gui.elements.UILabel(
-    relative_rect=pygame.Rect((330,20), (600, 100)),
-    text="Worlds Explorer",
+    relative_rect=pygame.Rect((20,20), (1880, 130)),
+    text="Use the sliders to...",
     manager=manager,
     object_id='title_label')
 
-textRect = pygame.Rect((640, 240), (620,200))
+planet_name = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text='planet name',
+    relative_rect=pygame.Rect((960, 350), (940, 150)),
+    manager=manager)
 
-size_label = pygame_gui.elements.ui_label.UILabel(
-    relative_rect=pygame.rect.Rect((20, 625), (200, 25)),
-    text='label',
+planet_text = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text='planet text',
+    relative_rect=pygame.Rect((960, 540), (940,360)),
+    manager=manager)
+
+SIZE = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((20, 240), (150, 50)),
+    text="SIZE",
+    manager=manager,
+    object_id='main_label')
+
+DIST = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((720, 240), (150, 50)),
+    text="DISTANCE",
+    manager=manager,
+    object_id='main_label')
+
+DENS = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((1200, 240), (150, 50)),
+    text="DENSITY",
+    manager=manager,
+    object_id='main_label')
+
+TEMP = pygame_gui.elements.ui_label.UILabel(
+    relative_rect=pygame.rect.Rect((1650, 240), (150, 50)),
+    text="TEMPERATURE",
+    manager=manager,
+    object_id='main_label')
+
+size_label = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text = 'text',
+    relative_rect = pygame.rect.Rect((200, 100), (240, 40)),
+    manager = manager,
+    object_id='param_label')
+
+dist_label = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text= 'Distance',
+    relative_rect = pygame.rect.Rect((680, 100), (240, 40)),
+    manager= manager,
+    object_id='param_label')
+
+dens_label = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text= 'Density',
+    relative_rect = pygame.rect.Rect((1150, 100), (240, 40)),
     manager=manager,
     object_id='param_label')
 
-dist_label = pygame_gui.elements.ui_label.UILabel(
-    relative_rect=pygame.rect.Rect((330, 625), (200, 25)),
-    text='label',
+temp_label = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text= 'Temp',
+    relative_rect = pygame.rect.Rect((1660, 100), (240, 40)),
     manager=manager,
     object_id='param_label')
 
-dens_label = pygame_gui.elements.ui_label.UILabel(
-    relative_rect=pygame.rect.Rect((690, 625), (200, 25)),
-    text='label',
-    manager=manager,
-    object_id='param_label')
+planet_size = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text = 'text',
+    relative_rect = pygame.rect.Rect((960, 270), (200, 50)),
+    manager = manager,
+    object_id='planet_label')
 
-temp_label = pygame_gui.elements.ui_label.UILabel(
-    relative_rect=pygame.rect.Rect((1010, 625), (200, 25)),
-    text='label',
-    manager=manager,
-    object_id='param_label')
 
+#icons
+
+size_icon = pygame.rect.Rect((20,100),(100,100))
+
+dist_icon = pygame.rect.Rect((480, 100), (100,100))
 
 #set_image(new_image: ~pygame.surface.Surface) allows image to change during runtime (screensaver)
 
@@ -93,13 +133,9 @@ while is_running:
     #drawing onto the screen
     screen.blit(background, (0, 0))
     manager.draw_ui(screen)
-    
-    pygame.draw.rect(screen, 'white', dist_checkbox)
-    pygame.draw.rect(screen, 'black' , size_checkbox)
-    pygame.draw.rect(screen, 'white', dens_checkbox)
-    pygame.draw.rect(screen, 'black', temp_checkbox)
 
-    pygame.draw.rect(screen, 'white', textRect)
+    pygame.draw.rect(screen, 'white', size_icon)
+    pygame.draw.rect(screen, 'white', dist_icon)
 
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
