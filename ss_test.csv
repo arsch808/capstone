@@ -1,11 +1,11 @@
-Callisto,1,3,1,2,G
-Ceres,1,2,2,4,G
-Enceladus,1,3,3,2,G
-Europa,1,3,3,2,G
-Ganymede,1,3,2,2,G
-Io,1,3,1,4,G
-Mars,1,2,1,1,G
-Mercury,1,1,1,2,G
-Pluto,1,4,1,4,G
-Titan,1,3,2,4,G
-Venus,2,2,2,4,G
+Callisto,0,2,0,0,Callisto | Moon of Jupiter | Solar System',"Callisto has the oldest surface in the solar system, studying it would give information about the rock composition of the early bodies'"
+Ceres,0,1,3,0,"Ceres | Asteroid Belt, Solar System'","Ceres has [so much water]. some thought the very bright spots were alien cities, but it's just very reflective salt: proof of an ocean underneath'"
+Enceladus,0,2,3,3,Enceladus | Moon of Saturn | Solar System',"More than a hundred geysers have been discovered on Enceladus, which shoot [x] feet into the air. The plumes are similar in composition to comets, which astronomers believe may have brought ice and organic molecules into the inner solar system'"
+Europa,0,2,2,3,Europa | Moon of Jupiter | Solar System',"Europa is strongly believed to have a megaocean underneath a thick crust of ice. This ocean may be warmed by deep volcanic vents, like ones where extremophiles thrive on earth'"
+Ganymede,0,2,3,3,Ganymede | Moon of Jupiter | Solar System',"Ganymede is big enough to be a planet itself, but is caught it Jupiter's orbit. Mag field (?), subsurface ocean'"
+Io,0,2,1,2,Io | Moon of Jupiter | Solar System',Io is the most volcanically active body in the solar system as it's squeezed by Jupiter. volcanos are important for cycling metals and gases from the inner planet'
+Mars,0,1,1,0,Mars | Inner Solar System',"Mars was once much more volcanically active, and potentially similar to Earth with a global water ocean. However, its small size led to its core cooling, and it lost its magnetic field and atmosphere as a result.'"
+Mercury,0,0,1,2,Mercury | Inner Solar System',"Mercury looks quite similar to the moon because they are very similar in shape and composition. Being the closest planet to the sun, many "
+Pluto,0,3,1,0,"Pluto | Kuiper Belt, Solar System'","Too cold and small for Earth-like life, but showed that dwarf planets are more complex than we thought. has an atmosphere and nitrogen ice'"
+Titan,0,2,2,0,Titan | Moon of Saturn | Solar System',"Titan's atmosphere supports a weather cycle and seasons but with methane, not water'"
+Venus,1,1,2,3,Venus | Inner Solar System',"Venus and Earth likely formed in a similar way. venus may have supported liquid water at one point, but fell victim to a runaway greenhouse effect supported by its thick atmosphere and volcanic activity'"
