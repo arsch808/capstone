@@ -205,7 +205,16 @@ search_button = pygame_gui.elements.UIButton(
 def compare(filename, s, d, p, t):
     best_match_arrays = []
     max_matches = -1
-    
+    global planet_name
+    global planet_size
+    global planet_size
+    global planet_distance
+    global planet_density
+    global planet_temoperature
+    global planet_text
+    global planet_image
+
+
     with open(filename, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
@@ -231,7 +240,7 @@ def compare(filename, s, d, p, t):
             planet_density = best_match_array[3]
             planet_temperature = best_match_array[4]
             planet_text = best_match_array[5]
-
+            #planet_image = best_match_array[6]
             
 #main loop of game window
 while is_running:
@@ -336,6 +345,7 @@ while is_running:
                 planet_text_box.clear()
                 planet_text_box.set_text(planet_text)
 
+                #planet_image_box.set_image(planet_image)
             
             
         
