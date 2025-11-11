@@ -18,7 +18,11 @@ background = pygame.Surface((1920, 1080))
 background.fill(pygame.Color('#000000'))
 
 
-#title text
+#LABEL: a short text that describes how parameters are changing
+#TEXT: longer desription that is more content-focused
+#BOX: a rectangle that holds text
+
+#title
 title_label = pygame_gui.elements.UILabel(
     relative_rect=pygame.Rect((20,20), (1880, 130)),
     text="What does it take to be habitable in space?",
@@ -36,6 +40,65 @@ denslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
 tempslide = pygame_gui.elements.ui_horizontal_slider.UIHorizontalSlider(
     ((1440, 200), (450, 30)), 0, (0,3), manager, None,None, 'slider', None, 1, 1)
 
+#parameter text: stored here for more concise main function
+
+size_param_label = '<p>The sheer size of a planet has a huge effect on the type of planet it will become. The term <i>planet</i> only applies when it has enough mass and gravity to form itself into a round shape.</p>'
+
+small_param_label = 'Worlds that are less than .5x the radius of the Earth.'
+small_param_text = 'The smaller something is, the more challenging it is to find, meaning there are few very small worlds we know of outside the Solar System. Small planets are typically rocky but may struggle to keep their cores molten, causing them to lose their magnetic field and protection from radiation.</p>'
+
+medium_param_label = 'Worlds that are about .5x to 1.5x the size of Earth.'
+medium_param_text = 'medium text placeholder' 
+
+big_param_label = 'Worlds between 1.5x and 2x times the radius of the Earth.'
+big_param_text = 'big text placeholder'
+
+giant_param_label = 'Worlds over 2x times the radius of the Earth.'
+giant_param_text = 'giant text placeholder'
+
+distance_param_label = 'distance label placeholder'
+
+close_param_label= 'close label placeholder'
+close_param_text = '<p>Being too close to the host star means being constantly pummeled with energy in the form of light, heat, and radiation. Worlds may also have their rotation disrupted or even be squished by the gravity of their star.</p>' 
+
+inner_param_label = 'inner label placeholder'
+inner_param_text = '<p> Venus, Earth, and Mars are all technically within the Habitable Zone of the sun, but even variations within the Zone can severely change a planet. Our neighbors are an example of how distance is one of the most notable factors in a planet&apos;s climate, other factors such as size can play just as large a role. Even a tiny change in distance will have big effects on the length of a year &mdash; Mars is not relatively far from us, but its year is almost twice as long.</p>'
+
+outer_param_label = 'outer label placeholder'
+outer_param_text = 'outer label placeholder'
+
+distant_param_label = 'distant label placeholder'
+distant_param_text = '<p>Current methods for finding worlds beyond our Solar System require using the light or gravity of the host star, making it very difficult to find planets even as far away as Jupiter is to our Sun. Even in our own Solar System, studying distant worlds is challenging &mdash; the New Horizons probe to Pluto took 9 years to fly by. However, since many astronomers believe important ingredients for life could be found far from the sun, making the challenge worthwhile.</p>'
+
+dens_param_label = '<p>Using a combination of observations and physics formulas, scientists are able to make estimates of mass and radius. Comparing the two can estimate density, which tells us about the potential composition of the world.</p>'
+
+rocky_param_label = 'A world mostly made of solid materials.'
+rocky_param_text = '<p>These worlds are solid all the way through, with very little liquid or gaseous elements. Though astronomers use the term <i>rocky</i>, most of these worlds contain metals in their core, especially iron. Rocky worlds are also more common nearer to their host stars. </p>'
+
+earthy_param_label = 'A world containing liquids and gases in addition to solid metals and rocks.'
+earthy_param_text = '<p> The Earth is about 33% Iron by mass. The rest is a combination of other metals, rocks, minerals, water, and gases. Most of this iron is found in the superheated core of the planet, which drives volcanic activity and keeps the planet &quot;alive&quot;. Astronomers believe a similar core and metal composition to Earth could be one indicator of potential habitability.</p>'
+
+watery_param_label = 'A world that contains a solid core, but also a significant global ocean.'
+watery_param_text = '<p>Though the surface of the Earth is 70% water, it accounts for less than 1% of Earth&apos;s total mass. Some worlds are estimated to be 20-40% water by total mass, with giant oceans stretching down for miles, heated by volcanic vents at the core</p>'
+
+neptune_param_label = 'neptune label placeholder'
+neptune_param_text = '<p>Worlds tend to fit one of two categories: a small world that is mostly rock, or a very large world mostly made of gas. Gas Giants, like Neptune, do not have a solid surface, but a slushy core where gases begin to turn solid and liquid under high pressure. Sub-Neptunes are an emerging study of in-between worlds that seem to be rocky cores with giant, puffy atmospheres. </p>'
+
+temp_param_label = 'The temperature of a world may seem straightforward, but depends on many interconnected factors. The atmosphere, presence of water, composition, distance, age, and more can all play a role. We often take the weather for granted on Earth, but the ability to form clouds and cycle water through the air is a key factor in maintaining a liveable temperature. The study of temperature in astrobiology is also linked to the study of <i>extremophiles</i> on Earth, or organisms that thrive in extreme environments.'
+
+freeze_param_label = 'freeze label placeholder'
+freeze_param_text = '<p> Outer Space nearly reaches what we believe to be the coldest possible temperature. Stars can provide energy, but only an atmosphere can trap it once the world is not in direct sunlight. [extremophiles on earth in freezing temperatures]. Astronomers have also shown that important organic molecules can be found frozen in ice.</p>'
+
+temperate_param_label = 'temperate label placeholder'
+temperate_param_text = 'temperate text placeholder'
+
+hot_param_label = 'hot label placeholder'
+hot_param_text = 'hot text placeholder'
+
+wild_param_label = 'A world where internal factors influence the temperature in ways not obvious from the surface'
+wild_param_text = 'wild text placeholder'
+
+
 #parameter graphics
 
 check = pygame.image.load('graphics/check.png').convert()
@@ -52,7 +115,7 @@ outer_graphic = pygame.image.load('graphics/outer.png').convert()
 distant_graphic = pygame.image.load('graphics/distant.png').convert()
 
 rocky_graphic = pygame.image.load('graphics/rocky.png').convert()
-earthy_graphic = pygame.image.load('graphics/rocky.png').convert()
+earthy_graphic = pygame.image.load('graphics/earthy.png').convert()
 watery_graphic = pygame.image.load('graphics/watery.png').convert()
 neptune_graphic = pygame.image.load('graphics/neptune.png').convert()
 
@@ -170,26 +233,26 @@ Temp_UILabel = pygame_gui.elements.ui_label.UILabel(
     manager=manager,
     object_id='main_label')
 
-#these labels change based on what the user has chosen
-size_label = pygame_gui.elements.ui_text_box.UITextBox(
+#these labels boxes change based on what the user has chosen
+size_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text = 'Size',
     relative_rect = pygame.rect.Rect((200, 150), (240, 40)),
     manager = manager,
     object_id='param_label')
 
-dist_label = pygame_gui.elements.ui_text_box.UITextBox(
+dist_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Distance',
     relative_rect = pygame.rect.Rect((680, 150), (240, 40)),
     manager= manager,
     object_id='param_label')
 
-dens_label = pygame_gui.elements.ui_text_box.UITextBox(
+dens_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Density',
     relative_rect = pygame.rect.Rect((1150, 150), (240, 40)),
     manager=manager,
     object_id='param_label')
 
-temp_label = pygame_gui.elements.ui_text_box.UITextBox(
+temp_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Temp',
     relative_rect = pygame.rect.Rect((1660, 150), (240, 40)),
     manager=manager,
@@ -210,11 +273,10 @@ def compare(filename, s, d, p, t):
     global planet_size
     global planet_distance
     global planet_density
-    global planet_temoperature
+    global planet_temperature
     global planet_text
-    global planet_image
-
-
+    global planet_image_path
+    
     with open(filename, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
@@ -234,13 +296,15 @@ def compare(filename, s, d, p, t):
         # Choose random match from best matches
         if best_match_arrays:
             best_match_array = random.choice(best_match_arrays)
-            planet_name = best_match_array[0]
+            planet_name = best_match_array[5]
             planet_size = best_match_array[1]
             planet_distance = best_match_array[2]
             planet_density = best_match_array[3]
             planet_temperature = best_match_array[4]
-            planet_text = best_match_array[5]
-            #planet_image = best_match_array[6]
+            planet_text = best_match_array[6]
+            planet_image_path = best_match_array[7]
+            
+
             
 #main loop of game window
 while is_running:
@@ -254,77 +318,141 @@ while is_running:
             if event.ui_element == sizeslide:
                 size_slider_value = sizeslide.get_current_value()
                 if size_slider_value == 0:
-                    size_label.clear()
-                    size_label.set_text('Small')
+                    size_label_box.clear()
+                    size_label_box.set_text('Small')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(small_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(small_param_text)
                     size_icon.set_image(small_graphic)
                 elif size_slider_value == 1:
-                    size_label.clear()
-                    size_label.set_text('Medium')
+                    size_label_box.clear()
+                    size_label_box.set_text('Medium')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(medium_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(medium_param_text)
                     size_icon.set_image(medium_graphic)
                 elif size_slider_value == 2:
-                    size_label.clear()
-                    size_label.set_text('Big')
+                    size_label_box.clear()
+                    size_label_box.set_text('Big')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(giant_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(giant_param_text)
                     size_icon.set_image(big_graphic)
                 elif size_slider_value == 3:
-                    size_label.clear()
-                    size_label.set_text('Giant')
+                    size_label_box.clear()
+                    size_label_box.set_text('Giant')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(giant_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(giant_param_text)
                     size_icon.set_image(giant_graphic)
                     
             if event.ui_element == distslide:
                 dist_slider_value = distslide.get_current_value()
                 if dist_slider_value == 0:
-                    dist_label.clear()
-                    dist_label.set_text('Close')
+                    dist_label_box.clear()
+                    dist_label_box.set_text('Close')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(close_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(close_param_text)
                     dist_icon.set_image(close_graphic)
                 elif dist_slider_value == 1:
-                    dist_label.clear()
-                    dist_label.set_text('Inner')
+                    dist_label_box.clear()
+                    dist_label_box.set_text('Inner')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(close_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(close_param_text)
                     dist_icon.set_image(inner_graphic)
                 elif dist_slider_value == 2:
-                    dist_label.clear()
-                    dist_label.set_text('Outer')
+                    dist_label_box.clear()
+                    dist_label_box.set_text('Outer')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(outer_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(outer_param_text)
                     dist_icon.set_image(outer_graphic)
                 elif dist_slider_value == 3:
-                    dist_label.clear()
-                    dist_label.set_text('Distant')
+                    dist_label_box.clear()
+                    dist_label_box.set_text('Distant')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(distant_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(distant_param_text)
                     dist_icon.set_image(distant_graphic)
 
             if event.ui_element == denslide:
                 dens_slider_value = denslide.get_current_value()
                 if dens_slider_value == 0:
-                    dens_label.clear()
-                    dens_label.set_text('100% Rocky')
+                    dens_label_box.clear()
+                    dens_label_box.set_text('100% Rocky')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(rocky_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(rocky_param_text)
                     dens_icon.set_image(rocky_graphic)
                 elif dens_slider_value == 1:
-                    dens_label.clear()
-                    dens_label.set_text('Rocky/Watery')
+                    dens_label_box.clear()
+                    dens_label_box.set_text('Similar to Earth')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(earthy_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(earthy_param_text)
                     dens_icon.set_image(earthy_graphic)
                 elif dens_slider_value == 2:
-                    dens_label.clear()
-                    dens_label.set_text('Water World')
+                    dens_label_box.clear()
+                    dens_label_box.set_text('Water World')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(watery_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(watery_param_text)
                     dens_icon.set_image(watery_graphic)
                 elif dens_slider_value == 3:
-                    dens_label.clear()
-                    dens_label.set_text('Mini-Neptune')
+                    dens_label_box.clear()
+                    dens_label_box.set_text('Sub-Neptune')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(neptune_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(neptune_param_text)
                     dens_icon.set_image(neptune_graphic)
 
             elif event.ui_element == tempslide:
                 temp_slider_value = tempslide.get_current_value()
                 if temp_slider_value == 0:
-                    temp_label.clear()
-                    temp_label.set_text('Freezing')
+                    temp_label_box.clear()
+                    temp_label_box.set_text('Freezing')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(freeze_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(freeze_param_text)
                     temp_icon.set_image(freeze_graphic)
                 elif temp_slider_value == 1:
-                    temp_label.clear()
-                    temp_label.set_text('Temperate')
+                    temp_label_box.clear()
+                    temp_label_box.set_text('Temperate')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(temperate_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(temperate_param_text)
                     temp_icon.set_image(temperate_graphic)
                 elif temp_slider_value == 2:
-                    temp_label.clear()
-                    temp_label.set_text('Scalding')
+                    temp_label_box.clear()
+                    temp_label_box.set_text('Scalding')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(hot_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(hot_param_text)
                     temp_icon.set_image(hot_graphic)
                 elif temp_slider_value == 3:
-                    temp_label.clear()
-                    temp_label.set_text('Wildcard')
+                    temp_label_box.clear()
+                    temp_label_box.set_text('Wildcard')
+                    planet_name_box.clear()
+                    planet_name_box.set_text(wild_param_label)
+                    planet_fact_box.clear()
+                    planet_fact_box.set_text(wild_param_text)
                     temp_icon.set_image(wild_graphic)
 
         
@@ -336,17 +464,17 @@ while is_running:
                 d = distslide.get_current_value()
                 p = denslide.get_current_value()
                 t = tempslide.get_current_value()
-                compare('ss_test.csv', s,d,p,t)
+                compare('Worlds_Data_Sheet.csv', s,d,p,t)
 
 
                 planet_name_box.clear()
                 planet_name_box.set_text(planet_name)
 
-                planet_text_box.clear()
-                planet_text_box.set_text(planet_text)
-
-                #planet_image_box.set_image(planet_image)
-            
+                planet_fact_box.clear()
+                planet_fact_box.set_text(planet_text)
+                
+                planet_image = pygame.image.load(planet_image_path).convert()
+                planet_image_box.set_image(planet_image, True)
             
         
 
