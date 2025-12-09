@@ -2,6 +2,8 @@ import pygame
 import pygame_gui
 import csv
 import random
+import gpiozero
+
 
 #initalize pygame
 pygame.init()
@@ -9,13 +11,14 @@ pygame.display.set_caption('Its_Alive')
 clock = pygame.time.Clock()
 is_running = True
 
+
 #set up the main window surface and gui manager
-screen = pygame.display.set_mode((1920, 1090))
-manager = pygame_gui.UIManager((1920, 1080))
+screen = pygame.display.set_mode((1920, 1080))
+manager = pygame_gui.UIManager((1920, 1080), 'theme.json')
 
 #background
-background = pygame.Surface((1920, 1080))
-background.fill(pygame.Color('#000000'))
+background = pygame.image.load("stars.jpg").convert()
+
 
 
 #LABEL: a short text that describes how parameters are changing
@@ -25,7 +28,7 @@ background.fill(pygame.Color('#000000'))
 #title
 title_label = pygame_gui.elements.UILabel(
     relative_rect=pygame.Rect((20,20), (1880, 130)),
-    text="What does it take to be habitable in space?",
+    text="What does it take to be habitable in space? Use the sliders to imagine a world, then use the SEARCH button to find similar planets in our universe.",
     manager=manager,
     object_id='title_label')
 
@@ -48,26 +51,26 @@ small_param_label = 'Worlds that are less than .5x the radius of the Earth.'
 small_param_text = 'The smaller something is, the more challenging it is to find, meaning there are few very small worlds we know of outside the Solar System. Small planets are typically rocky but may struggle to keep their cores molten, causing them to lose their magnetic field and protection from radiation.</p>'
 
 medium_param_label = 'Worlds that are about .5x to 1.5x the size of Earth.'
-medium_param_text = 'medium text placeholder' 
+medium_param_text = 'Earth is fairly large for a terrestrial planet and fairly small in the context of all planets. Earth&apos;s size may have played an important role in becoming habitable. Too small, and it cools off; too large, and it becomes gas-dominated.' 
 
 big_param_label = 'Worlds between 1.5x and 2x times the radius of the Earth.'
-big_param_text = 'big text placeholder'
+big_param_text = 'Many terrestrial exoplanets have been found in the range slightly bighger than Earth. These planets have been termed &quot;super-Earths&quot; and are often good candidates for Earth-like conditions.'
 
 giant_param_label = 'Worlds over 2x times the radius of the Earth.'
-giant_param_text = 'giant text placeholder'
+giant_param_text = 'Planets of this size typically made of more gas than they are rock. The term &quot;mini-Neptune&quot; has been used to describe these planets, but new research shows super-Earths may just be mini-Neptunes that lost their atmospheres.'
 
-distance_param_label = 'distance label placeholder'
+distance_param_label = 'Here, distance is a comparison between '
 
-close_param_label= 'close label placeholder'
+close_param_label= 'Worlds that are too close to their star'
 close_param_text = '<p>Being too close to the host star means being constantly pummeled with energy in the form of light, heat, and radiation. Worlds may also have their rotation disrupted or even be squished by the gravity of their star.</p>' 
 
-inner_param_label = 'inner label placeholder'
+inner_param_label = 'Worlds within their star&apos;s Habitable Zone.'
 inner_param_text = '<p> Venus, Earth, and Mars are all technically within the Habitable Zone of the sun, but even variations within the Zone can severely change a planet. Our neighbors are an example of how distance is one of the most notable factors in a planet&apos;s climate, other factors such as size can play just as large a role. Even a tiny change in distance will have big effects on the length of a year &mdash; Mars is not relatively far from us, but its year is almost twice as long.</p>'
 
-outer_param_label = 'outer label placeholder'
-outer_param_text = 'outer label placeholder'
+outer_param_label = 'Worlds outside their star&apos;s Habitable Zone'
+outer_param_text = 'Despite this range being too cold for life, some moons orbiting the Solar System&apos;s Gas Giants are theorized to have conditions for specialized life.'
 
-distant_param_label = 'distant label placeholder'
+distant_param_label = 'Worlds far from their star'
 distant_param_text = '<p>Current methods for finding worlds beyond our Solar System require using the light or gravity of the host star, making it very difficult to find planets even as far away as Jupiter is to our Sun. Even in our own Solar System, studying distant worlds is challenging &mdash; the New Horizons probe to Pluto took 9 years to fly by. However, since many astronomers believe important ingredients for life could be found far from the sun, making the challenge worthwhile.</p>'
 
 dens_param_label = '<p>Using a combination of observations and physics formulas, scientists are able to make estimates of mass and radius. Comparing the two can estimate density, which tells us about the potential composition of the world.</p>'
@@ -81,22 +84,22 @@ earthy_param_text = '<p> The Earth is about 33% Iron by mass. The rest is a comb
 watery_param_label = 'A world that contains a solid core, but also a significant global ocean.'
 watery_param_text = '<p>Though the surface of the Earth is 70% water, it accounts for less than 1% of Earth&apos;s total mass. Some worlds are estimated to be 20-40% water by total mass, with giant oceans stretching down for miles, heated by volcanic vents at the core</p>'
 
-neptune_param_label = 'neptune label placeholder'
-neptune_param_text = '<p>Worlds tend to fit one of two categories: a small world that is mostly rock, or a very large world mostly made of gas. Gas Giants, like Neptune, do not have a solid surface, but a slushy core where gases begin to turn solid and liquid under high pressure. Sub-Neptunes are an emerging study of in-between worlds that seem to be rocky cores with giant, puffy atmospheres. </p>'
+neptune_param_label = 'A world with a thick, puffy atmosphere'
+neptune_param_text = '<p>Worlds tend to fit one of two categories: a small world that is mostly rock, or a very large world mostly made of gas. Gas Giants, like Neptune, do not have a solid surface, but a slushy core where gases begin to turn solid and liquid under high pressure. Mini-Neptunes are an emerging study of in-between worlds that seem to be rocky cores with giant, puffy atmospheres. </p>'
 
 temp_param_label = 'The temperature of a world may seem straightforward, but depends on many interconnected factors. The atmosphere, presence of water, composition, distance, age, and more can all play a role. We often take the weather for granted on Earth, but the ability to form clouds and cycle water through the air is a key factor in maintaining a liveable temperature. The study of temperature in astrobiology is also linked to the study of <i>extremophiles</i> on Earth, or organisms that thrive in extreme environments.'
 
-freeze_param_label = 'freeze label placeholder'
-freeze_param_text = '<p> Outer Space nearly reaches what we believe to be the coldest possible temperature. Stars can provide energy, but only an atmosphere can trap it once the world is not in direct sunlight. [extremophiles on earth in freezing temperatures]. Astronomers have also shown that important organic molecules can be found frozen in ice.</p>'
+freeze_param_label = 'Worlds too cold for liquid water'
+freeze_param_text = '<p> Outer Space nearly reaches what we believe to be the coldest possible temperature. Stars can provide energy, but only an atmosphere can trap it once the world is not in direct sunlight.Still, some organisms on Earth are able to survive extreme cold. Astronomers have also shown that important organic molecules can be found frozen in ice.</p>'
 
-temperate_param_label = 'temperate label placeholder'
-temperate_param_text = 'temperate text placeholder'
+temperate_param_label = 'Worlds where liquid water could exist'
+temperate_param_text = 'The general temperatures for Earth-like habitability are between -15 and 122 degrees Celsius. This encompasses the range where water is liquid. Currently, exoplanet temperatures are estimations, but several worlds show promise of Earth-like temperatures.'
 
-hot_param_label = 'hot label placeholder'
-hot_param_text = 'hot text placeholder'
+hot_param_label = 'Worlds too hot for liquid water'
+hot_param_text = 'Many worlds have features that raise their temperature dramatically, such as close orbits, volcanic activity, or heat-trapping atmospheres. Maintaining a temperate climate is difficult, and worlds that become too hot sometimes pass the point of no return.'
 
-wild_param_label = 'A world where internal factors influence the temperature in ways not obvious from the surface'
-wild_param_text = 'wild text placeholder'
+wild_param_label = 'A world where internal factors influence the temperature in unique ways'
+wild_param_text = 'Many worlds can only be measured by one estimated temperature. In comparison, Earth is convered in temperature variations where extremophiles adapt and thrive. Some worlds, most notably Jupiter&apos;s moon Europa, are hypothesized to have features such as hydrothermal vents that would create a habitable zone inside a seemingly uninhabitable planet.'
 
 
 #parameter graphics
@@ -150,28 +153,28 @@ temp_icon = pygame_gui.elements.ui_image.UIImage(
     manager = manager,
     visible = 1)
 
-#planet images
 
-callisto_image = pygame.image.load('images/Callisto.jpg').convert()
-ceres_image = pygame.image.load('images/Ceres.jpg').convert()
-enceladus_image = pygame.image.load('images/Enceladus.png').convert()
-europa_image = pygame.image.load('images/Europa.jpg').convert()
-ganymede_image = pygame.image.load('images/Ganymede.jpg').convert()
-io_image = pygame.image.load('images/Io.png').convert()
-mars_image = pygame.image.load('images/Mars.png').convert()
-mercury_image = pygame.image.load('images/Mercury.jpg').convert()
-pluto_image = pygame.image.load('images/Pluto.jpg').convert()
-titan_image = pygame.image.load('images/Titan.png').convert()
-venus_image = pygame.image.load('images/Venus.jpg').convert()
+#planet images box: images themselves stored within the csv data
 
+blank_surface  = pygame.Surface((600,600))
 
 planet_image_box = pygame_gui.elements.ui_image.UIImage(
     relative_rect = pygame.rect.Rect((120, 400), (600, 600)),
-    image_surface = mars_image,
+    image_surface = blank_surface,
     manager = manager,
     visible = 1)
                                 
+paramlabelbox = pygame_gui.elements.ui_text_box.UITextBox(
+    html_text = "param label",
+    relative_rect = pygame.rect.Rect((220, 500), (400,400)),
+    manager= manager,
+    visible = 1,
+    object_id = 'paramlabelbox')
 
+imagecaption = pygame_gui.elements.ui_label.UILabel(
+    relative_rect = pygame.rect.Rect((120, 500), (600, 50)),
+    text = " ",
+    manager = manager)
 
 #planet info UI boxes
 
@@ -258,11 +261,232 @@ temp_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     manager=manager,
     object_id='param_label')
 
-#search button
-search_button = pygame_gui.elements.UIButton(
-    relative_rect = pygame.Rect((960, 1000), (100,100)),
-    text='SEARCH',
-    manager=manager)
+
+#gpio functions
+
+def sizefunc(device):
+    if device.pin.number == 4:
+        print('0')
+        sizeslide.set_current_value(0)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('size_param_label')
+        size_label_box.clear()
+        size_label_box.set_text('Small')
+        planet_name_box.clear()
+        planet_name_box.set_text(small_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(small_param_text)
+        size_icon.set_image(small_graphic)
+    elif device.pin.number == 17:
+        sizeslide.set_current_value(1)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('size_param_label')
+        size_label_box.clear()
+        size_label_box.set_text('Medium')
+        planet_name_box.clear()
+        planet_name_box.set_text(medium_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(medium_param_text)
+        size_icon.set_image(medium_graphic)
+    elif device.pin.number == 27:
+        sizeslide.set_current_value(2)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('size_param_label')
+        size_label_box.clear()
+        size_label_box.set_text('Big')
+        planet_name_box.clear()
+        planet_name_box.set_text(giant_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(giant_param_text)
+        size_icon.set_image(big_graphic)
+    elif device.pin.number == 22:
+        sizeslide.set_current_value(3)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('size_param_label')
+        size_label_box.clear()
+        size_label_box.set_text('Giant')
+        planet_name_box.clear()
+        planet_name_box.set_text(giant_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(giant_param_text)
+        size_icon.set_image(giant_graphic)
+        
+def distfunc(device):
+    if device.pin.number == 5:
+        distslide.set_current_value(0)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dist_param_label')
+        dist_label_box.clear()
+        dist_label_box.set_text('Close')
+        planet_name_box.clear()
+        planet_name_box.set_text(close_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(close_param_text)
+        dist_icon.set_image(close_graphic)
+    elif device.pin.number == 6:
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dist_param_label')
+        distslide.set_current_value(1)
+        dist_label_box.clear()
+        dist_label_box.set_text('Inner')
+        planet_name_box.clear()
+        planet_name_box.set_text(close_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(close_param_text)
+        dist_icon.set_image(inner_graphic)
+    elif device.pin.number == 13:
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dist_param_label')
+        distslide.set_current_value(2)
+        dist_label_box.clear()
+        dist_label_box.set_text('Outer')
+        planet_name_box.clear()
+        planet_name_box.set_text(outer_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(outer_param_text)
+        dist_icon.set_image(outer_graphic)
+    elif device.pin.number == 19:
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dist_param_label')
+        distslide.set_current_value(3)
+        dist_label_box.clear()
+        dist_label_box.set_text('Distant')
+        planet_name_box.clear()
+        planet_name_box.set_text(distant_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(distant_param_text)
+        dist_icon.set_image(distant_graphic)
+        
+def densfunc(device):
+    if device.pin.number == 18:
+        denslide.set_current_value(0)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dens_param_label')
+        dens_label_box.clear()
+        dens_label_box.set_text('100% Rocky')
+        planet_name_box.clear()
+        planet_name_box.set_text(rocky_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(rocky_param_text)
+        dens_icon.set_image(rocky_graphic)
+    elif device.pin.number == 23:
+        denslide.set_current_value(1)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dens_param_label')
+        dens_label_box.clear()
+        dens_label_box.set_text('Similar to Earth')
+        planet_name_box.clear()
+        planet_name_box.set_text(earthy_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(earthy_param_text)
+        dens_icon.set_image(earthy_graphic)
+    elif device.pin.number == 24:
+        denslide.set_current_value(2)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dens_param_label')
+        dens_label_box.clear()
+        dens_label_box.set_text('Water World')
+        planet_name_box.clear()
+        planet_name_box.set_text(watery_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(watery_param_text)
+        dens_icon.set_image(watery_graphic)
+    elif device.pin.number == 25:
+        denslide.set_current_value(3)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('dens_param_label')
+        dens_label_box.clear()
+        dens_label_box.set_text('Sub-Neptune')
+        planet_name_box.clear()
+        planet_name_box.set_text(neptune_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(neptune_param_text)
+        dens_icon.set_image(neptune_graphic)
+        
+def tempfunc(device):
+    if device.pin.number == 12:
+        tempslide.set_current_value(0)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('temp_param_label')
+        temp_label_box.clear()
+        temp_label_box.set_text('Freezing')
+        planet_name_box.clear()
+        planet_name_box.set_text(freeze_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(freeze_param_text)
+        temp_icon.set_image(freeze_graphic)
+    elif device.pin.number == 16:
+        tempslide.set_current_value(1)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('temp_param_label')
+        temp_label_box.clear()
+        temp_label_box.set_text('Temperate')
+        planet_name_box.clear()
+        planet_name_box.set_text(temperate_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(temperate_param_text)
+        temp_icon.set_image(temperate_graphic)
+    elif device.pin.number == 20:
+        tempslide.set_current_value(2)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('temp_param_label')
+        temp_label_box.clear()
+        temp_label_box.set_text('Scalding')
+        planet_name_box.clear()
+        planet_name_box.set_text(hot_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(hot_param_text)
+        temp_icon.set_image(hot_graphic)
+    elif device.pin.number == 21:
+        tempslide.set_current_value(3)
+        paramlabelbox.show()
+        paramlabelbox.clear()
+        paramlabelbox.set_text('temp_param_label')
+        temp_label_box.clear()
+        temp_label_box.set_text('Wildcard')
+        planet_name_box.clear()
+        planet_name_box.set_text(wild_param_label)
+        planet_fact_box.clear()
+        planet_fact_box.set_text(wild_param_text)
+        temp_icon.set_image(wild_graphic)
+        
+#defining the switches of the gpio
+size_0 = gpiozero.DigitalInputDevice(4)
+size_1 = gpiozero.DigitalInputDevice(17)
+size_2 = gpiozero.DigitalInputDevice(27)
+size_3 = gpiozero.DigitalInputDevice(22)
+
+dist_0 = gpiozero.DigitalInputDevice(5)
+dist_1 = gpiozero.DigitalInputDevice(6)
+dist_2 = gpiozero.DigitalInputDevice(13)
+dist_3 = gpiozero.DigitalInputDevice(19)
+
+dens_0 = gpiozero.DigitalInputDevice(18)
+dens_1 = gpiozero.DigitalInputDevice(23)
+dens_2 = gpiozero.DigitalInputDevice(24)
+dens_3 = gpiozero.DigitalInputDevice(25)
+
+temp_0 = gpiozero.DigitalInputDevice(12)
+temp_1 = gpiozero.DigitalInputDevice(16)
+temp_2 = gpiozero.DigitalInputDevice(20)
+temp_3 = gpiozero.DigitalInputDevice(21)
+
+search_button = gpiozero.Button(26)
 
 #comparison function that searches csv for a best match
 def compare(filename, s, d, p, t):
@@ -284,7 +508,7 @@ def compare(filename, s, d, p, t):
             # Compare s, d, p, t to columns 2, 3, 4, 5 (indices 1, 2, 3, 4)
             target = [s, d, p, t]
             for i in range(4):  # Compare the first four columns
-                if float(target[i]) == float(row[i + 1]):  # Adjust index for CSV
+                if float(target[i]) == float(row[i + 1]):  
                     current_matches += 1
 
             if current_matches > max_matches:
@@ -303,17 +527,63 @@ def compare(filename, s, d, p, t):
             planet_temperature = best_match_array[4]
             planet_text = best_match_array[6]
             planet_image_path = best_match_array[7]
+            image_caption = best_match_array[8]
             
+            
+def searchfunc(device):
+    s = sizeslide.get_current_value()
+    d = distslide.get_current_value()
+    p = denslide.get_current_value()
+    t = tempslide.get_current_value()
+    compare('Worlds_Data_Sheet.csv', s,d,p,t)
 
+    paramlabelbox.hide()
+    
+    planet_name_box.clear()
+    planet_name_box.set_text(planet_name)
+
+    planet_fact_box.clear()
+    planet_fact_box.set_text(planet_text)
+    
+    imagecaption.set_text(image_caption)
+                
+    planet_image = pygame.image.load(planet_image_path).convert()
+    planet_image_box.set_image(planet_image, True)
+        
+            
+                                                              
             
 #main loop of game window
 while is_running:
     time_delta = clock.tick(60)/1000.0
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
 
         #SELECTION PHASE
+            
+        size_0.when_activated = sizefunc
+        size_1.when_activated = sizefunc
+        size_2.when_activated = sizefunc
+        size_3.when_activated = sizefunc
+        
+        dist_0.when_activated = distfunc
+        dist_1.when_activated = distfunc
+        dist_2.when_activated = distfunc
+        dist_3.when_activated = distfunc
+        
+        dens_0.when_activated = densfunc
+        dens_1.when_activated = densfunc
+        dens_2.when_activated = densfunc
+        dens_3.when_activated = densfunc
+        
+        temp_0.when_activated = tempfunc
+        temp_1.when_activated = tempfunc
+        temp_2.when_activated = tempfunc
+        temp_3.when_activated = tempfunc
+        
+            
         if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
             if event.ui_element == sizeslide:
                 size_slider_value = sizeslide.get_current_value()
@@ -457,8 +727,10 @@ while is_running:
 
         
         #SEARCH PHASE
+        search_button.when_activated = searchfunc            
+        
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == search_button:
+            if event.ui_element == search_button_ui:
                 #csv is indexed from 0
                 s = sizeslide.get_current_value()
                 d = distslide.get_current_value()
@@ -491,6 +763,7 @@ while is_running:
 
 #END: final display
     pygame.display.update()
+
 
 
 pygame.quit()
