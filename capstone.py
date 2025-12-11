@@ -17,7 +17,7 @@ screen = pygame.display.set_mode((1920, 1080))
 manager = pygame_gui.UIManager((1920, 1080), 'theme.json')
 
 #background
-background = pygame.image.load("stars.jpg").convert()
+background = pygame.image.load("background.PNG").convert()
 
 
 
@@ -27,7 +27,7 @@ background = pygame.image.load("stars.jpg").convert()
 
 #title
 title_label = pygame_gui.elements.UILabel(
-    relative_rect=pygame.Rect((20,20), (1880, 130)),
+    relative_rect=pygame.Rect((20,5), (1880, 120)),
     text="What does it take to be habitable in space? Use the sliders to imagine a world, then use the SEARCH button to find similar planets in our universe.",
     manager=manager,
     object_id='title_label')
@@ -59,7 +59,7 @@ big_param_text = 'Many terrestrial exoplanets have been found in the range sligh
 giant_param_label = 'Worlds over 2x times the radius of the Earth.'
 giant_param_text = 'Planets of this size typically made of more gas than they are rock. The term &quot;mini-Neptune&quot; has been used to describe these planets, but new research shows super-Earths may just be mini-Neptunes that lost their atmospheres.'
 
-distance_param_label = 'Here, distance is a comparison between '
+dist_param_label = 'This is a measurement of the distance between a world and its star.'
 
 close_param_label= 'Worlds that are too close to their star'
 close_param_text = '<p>Being too close to the host star means being constantly pummeled with energy in the form of light, heat, and radiation. Worlds may also have their rotation disrupted or even be squished by the gravity of their star.</p>' 
@@ -87,7 +87,7 @@ watery_param_text = '<p>Though the surface of the Earth is 70% water, it account
 neptune_param_label = 'A world with a thick, puffy atmosphere'
 neptune_param_text = '<p>Worlds tend to fit one of two categories: a small world that is mostly rock, or a very large world mostly made of gas. Gas Giants, like Neptune, do not have a solid surface, but a slushy core where gases begin to turn solid and liquid under high pressure. Mini-Neptunes are an emerging study of in-between worlds that seem to be rocky cores with giant, puffy atmospheres. </p>'
 
-temp_param_label = 'The temperature of a world may seem straightforward, but depends on many interconnected factors. The atmosphere, presence of water, composition, distance, age, and more can all play a role. We often take the weather for granted on Earth, but the ability to form clouds and cycle water through the air is a key factor in maintaining a liveable temperature. The study of temperature in astrobiology is also linked to the study of <i>extremophiles</i> on Earth, or organisms that thrive in extreme environments.'
+temp_param_label = 'The temperature of a world depends on many interconnected factors. The atmosphere, presence of water, composition, distance, age, and more can all play a role. Aastrobiology is also linked to the study of <i>extremophiles</i> on Earth, or organisms that thrive in extreme environments.'
 
 freeze_param_label = 'Worlds too cold for liquid water'
 freeze_param_text = '<p> Outer Space nearly reaches what we believe to be the coldest possible temperature. Stars can provide energy, but only an atmosphere can trap it once the world is not in direct sunlight.Still, some organisms on Earth are able to survive extreme cold. Astronomers have also shown that important organic molecules can be found frozen in ice.</p>'
@@ -171,10 +171,7 @@ paramlabelbox = pygame_gui.elements.ui_text_box.UITextBox(
     visible = 1,
     object_id = 'paramlabelbox')
 
-imagecaption = pygame_gui.elements.ui_label.UILabel(
-    relative_rect = pygame.rect.Rect((120, 500), (600, 50)),
-    text = " ",
-    manager = manager)
+
 
 #planet info UI boxes
 
@@ -190,22 +187,22 @@ planet_fact_box = pygame_gui.elements.ui_text_box.UITextBox(
 
 planet_size_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text='planet size',
-    relative_rect = pygame.Rect((200, 250), (240, 40)),
+    relative_rect = pygame.Rect((200, 250), (240, 50)),
     manager = manager)
 
 planet_dist_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text='planet dist',
-    relative_rect = pygame.Rect((680, 250), (240, 40)),
+    relative_rect = pygame.Rect((680, 250), (240, 50)),
     manager = manager)
 
 planet_dens_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text='planet dens',
-    relative_rect = pygame.Rect((1150, 250), (240, 40)),
+    relative_rect = pygame.Rect((1150, 250), (240, 50)),
     manager = manager)
 
 planet_temp_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text = 'planet temp',
-    relative_rect = pygame.Rect((1660, 250), (240, 40)),
+    relative_rect = pygame.Rect((1660, 250), (240, 50)),
     manager=manager)
     
 
@@ -239,28 +236,34 @@ Temp_UILabel = pygame_gui.elements.ui_label.UILabel(
 #these labels boxes change based on what the user has chosen
 size_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text = 'Size',
-    relative_rect = pygame.rect.Rect((200, 150), (240, 40)),
+    relative_rect = pygame.rect.Rect((200, 150), (240, 50)),
     manager = manager,
     object_id='param_label')
 
 dist_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Distance',
-    relative_rect = pygame.rect.Rect((680, 150), (240, 40)),
+    relative_rect = pygame.rect.Rect((680, 150), (240, 50)),
     manager= manager,
     object_id='param_label')
 
 dens_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Density',
-    relative_rect = pygame.rect.Rect((1150, 150), (240, 40)),
+    relative_rect = pygame.rect.Rect((1150, 150), (240, 50)),
     manager=manager,
     object_id='param_label')
 
 temp_label_box = pygame_gui.elements.ui_text_box.UITextBox(
     html_text= 'Temp',
-    relative_rect = pygame.rect.Rect((1660, 150), (240, 40)),
+    relative_rect = pygame.rect.Rect((1660, 150), (240, 50)),
     manager=manager,
     object_id='param_label')
 
+#search button
+search_button = pygame_gui.elements.UIButton(
+    relative_rect = pygame.Rect((960, 1000), (100, 100)),
+    text= 'SEARCH',
+    manager = manager,
+    visible = 0)
 
 #gpio functions
 
@@ -269,49 +272,49 @@ def sizefunc(device):
         print('0')
         sizeslide.set_current_value(0)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('size_param_label')
-        size_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(size_param_label)
+        #size_label_box.clear()
         size_label_box.set_text('Small')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(small_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(small_param_text)
         size_icon.set_image(small_graphic)
     elif device.pin.number == 17:
         sizeslide.set_current_value(1)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('size_param_label')
-        size_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(size_param_label)
+        #size_label_box.clear()
         size_label_box.set_text('Medium')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(medium_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(medium_param_text)
         size_icon.set_image(medium_graphic)
     elif device.pin.number == 27:
         sizeslide.set_current_value(2)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('size_param_label')
-        size_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(size_param_label)
+        #size_label_box.clear()
         size_label_box.set_text('Big')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(giant_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(giant_param_text)
         size_icon.set_image(big_graphic)
     elif device.pin.number == 22:
         sizeslide.set_current_value(3)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('size_param_label')
-        size_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(size_param_label)
+        #size_label_box.clear()
         size_label_box.set_text('Giant')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(giant_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(giant_param_text)
         size_icon.set_image(giant_graphic)
         
@@ -319,49 +322,49 @@ def distfunc(device):
     if device.pin.number == 5:
         distslide.set_current_value(0)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dist_param_label')
-        dist_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dist_param_label)
+        #dist_label_box.clear()
         dist_label_box.set_text('Close')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(close_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(close_param_text)
         dist_icon.set_image(close_graphic)
     elif device.pin.number == 6:
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dist_param_label')
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dist_param_label)
         distslide.set_current_value(1)
-        dist_label_box.clear()
+        #dist_label_box.clear()
         dist_label_box.set_text('Inner')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(close_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(close_param_text)
         dist_icon.set_image(inner_graphic)
     elif device.pin.number == 13:
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dist_param_label')
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dist_param_label)
         distslide.set_current_value(2)
-        dist_label_box.clear()
+        #dist_label_box.clear()
         dist_label_box.set_text('Outer')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(outer_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(outer_param_text)
         dist_icon.set_image(outer_graphic)
     elif device.pin.number == 19:
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dist_param_label')
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dist_param_label)
         distslide.set_current_value(3)
-        dist_label_box.clear()
+        #dist_label_box.clear()
         dist_label_box.set_text('Distant')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(distant_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(distant_param_text)
         dist_icon.set_image(distant_graphic)
         
@@ -369,49 +372,49 @@ def densfunc(device):
     if device.pin.number == 18:
         denslide.set_current_value(0)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dens_param_label')
-        dens_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dens_param_label)
+        #dens_label_box.clear()
         dens_label_box.set_text('100% Rocky')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(rocky_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(rocky_param_text)
         dens_icon.set_image(rocky_graphic)
     elif device.pin.number == 23:
         denslide.set_current_value(1)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dens_param_label')
-        dens_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dens_param_label)
+        #dens_label_box.clear()
         dens_label_box.set_text('Similar to Earth')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(earthy_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(earthy_param_text)
         dens_icon.set_image(earthy_graphic)
     elif device.pin.number == 24:
         denslide.set_current_value(2)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dens_param_label')
-        dens_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dens_param_label)
+        #dens_label_box.clear()
         dens_label_box.set_text('Water World')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(watery_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(watery_param_text)
         dens_icon.set_image(watery_graphic)
     elif device.pin.number == 25:
         denslide.set_current_value(3)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('dens_param_label')
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(dens_param_label)
         dens_label_box.clear()
-        dens_label_box.set_text('Sub-Neptune')
-        planet_name_box.clear()
+        dens_label_box.set_text('Mini-Neptune')
+        #planet_name_box.clear()
         planet_name_box.set_text(neptune_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(neptune_param_text)
         dens_icon.set_image(neptune_graphic)
         
@@ -419,49 +422,49 @@ def tempfunc(device):
     if device.pin.number == 12:
         tempslide.set_current_value(0)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('temp_param_label')
-        temp_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(temp_param_label)
+        #temp_label_box.clear()
         temp_label_box.set_text('Freezing')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(freeze_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(freeze_param_text)
         temp_icon.set_image(freeze_graphic)
     elif device.pin.number == 16:
         tempslide.set_current_value(1)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('temp_param_label')
-        temp_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(temp_param_label)
+        #temp_label_box.clear()
         temp_label_box.set_text('Temperate')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(temperate_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(temperate_param_text)
         temp_icon.set_image(temperate_graphic)
     elif device.pin.number == 20:
         tempslide.set_current_value(2)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('temp_param_label')
-        temp_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(temp_param_label)
+        #temp_label_box.clear()
         temp_label_box.set_text('Scalding')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(hot_param_label)
-        planet_fact_box.clear()
+        #planet_fact_box.clear()
         planet_fact_box.set_text(hot_param_text)
         temp_icon.set_image(hot_graphic)
     elif device.pin.number == 21:
         tempslide.set_current_value(3)
         paramlabelbox.show()
-        paramlabelbox.clear()
-        paramlabelbox.set_text('temp_param_label')
-        temp_label_box.clear()
+        #paramlabelbox.clear()
+        paramlabelbox.set_text(temp_param_label)
+        
         temp_label_box.set_text('Wildcard')
-        planet_name_box.clear()
+        #planet_name_box.clear()
         planet_name_box.set_text(wild_param_label)
-        planet_fact_box.clear()
+        
         planet_fact_box.set_text(wild_param_text)
         temp_icon.set_image(wild_graphic)
         
@@ -500,15 +503,16 @@ def compare(filename, s, d, p, t):
     global planet_temperature
     global planet_text
     global planet_image_path
+    global target
     
     with open(filename, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             current_matches = 0
-            # Compare s, d, p, t to columns 2, 3, 4, 5 (indices 1, 2, 3, 4)
+            # Compare s, d, p, t to columns 1, 2, 3, 4
             target = [s, d, p, t]
             for i in range(4):  # Compare the first four columns
-                if float(target[i]) == float(row[i + 1]):  
+                if float(target[i]) == float(row[i]):  
                     current_matches += 1
 
             if current_matches > max_matches:
@@ -520,35 +524,78 @@ def compare(filename, s, d, p, t):
         # Choose random match from best matches
         if best_match_arrays:
             best_match_array = random.choice(best_match_arrays)
-            planet_name = best_match_array[5]
-            planet_size = best_match_array[1]
-            planet_distance = best_match_array[2]
-            planet_density = best_match_array[3]
-            planet_temperature = best_match_array[4]
-            planet_text = best_match_array[6]
-            planet_image_path = best_match_array[7]
-            image_caption = best_match_array[8]
+            planet_name = best_match_array[4]
+            planet_size = best_match_array[0]
+            planet_distance = best_match_array[1]
+            planet_density = best_match_array[2]
+            planet_temperature = best_match_array[3]
+            planet_text = best_match_array[5]
+            planet_image_path = best_match_array[6]
+            
+        
+            #image_caption = best_match_array[7]
             
             
 def searchfunc(device):
-    s = sizeslide.get_current_value()
-    d = distslide.get_current_value()
-    p = denslide.get_current_value()
-    t = tempslide.get_current_value()
-    compare('Worlds_Data_Sheet.csv', s,d,p,t)
+    if device.pin.number == 26:
+        print(0)
+        s = sizeslide.get_current_value()
+        d = distslide.get_current_value()
+        p = denslide.get_current_value()
+        t = tempslide.get_current_value()
+        compare('Worlds_Data_Sheet.csv', s,d,p,t)
 
-    paramlabelbox.hide()
+        paramlabelbox.hide()
     
-    planet_name_box.clear()
-    planet_name_box.set_text(planet_name)
+        #planet_name_box.clear()
+        planet_name_box.set_text(planet_name)
 
-    planet_fact_box.clear()
-    planet_fact_box.set_text(planet_text)
-    
-    imagecaption.set_text(image_caption)
+        #planet_fact_box.clear()
+        planet_fact_box.set_text(planet_text)
+        
+        if s == 0:
+                planet_size_box.set_text("Small")
+        elif s == 1:
+                planet_size_box.set_text('Medium')
+        elif s == 2:
+                planet_size_box.set_text('Big')
+        elif s == 3:
+                planet_size_box.set_text('Giant')
                 
-    planet_image = pygame.image.load(planet_image_path).convert()
-    planet_image_box.set_image(planet_image, True)
+        if d == 0:
+                planet_dist_box.set_text("Close")
+        elif d == 1:
+                planet_dist_box.set_text('Inner')
+        elif d == 2:
+                planet_dist_box.set_text('Outer')
+        elif d == 3:
+                planet_dist_box.set_text('Distant')
+                
+        if p == 0:
+                planet_dens_box.set_text("100% Rocky")
+        elif p == 1:
+                planet_dens_box.set_text('Similar to Earth')
+        elif p == 2:
+                planet_dens_box.set_text('Water World')
+        elif p == 3:
+                planet_dens_box.set_text('Mini-Neptune')
+                
+        if t == 0:
+                planet_temp_box.set_text("Freezing")
+        elif t == 1:
+                planet_temp_box.set_text('Temperate')
+        elif t == 2:
+                planet_temp_box.set_text('Scalding')
+        elif t == 3:
+                planet_temp_box.set_text('Wildcard')
+                    
+        
+    
+        #imagecaption.set_text(image_caption)
+                
+        planet_image = pygame.image.load(planet_image_path).convert()
+        planet_image_box.set_image(planet_image, True)
+        
         
             
                                                               
@@ -582,6 +629,9 @@ while is_running:
         temp_1.when_activated = tempfunc
         temp_2.when_activated = tempfunc
         temp_3.when_activated = tempfunc
+        
+        #SEARCH PHASE
+        search_button.when_released = searchfunc
         
             
         if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
@@ -725,28 +775,9 @@ while is_running:
                     planet_fact_box.set_text(wild_param_text)
                     temp_icon.set_image(wild_graphic)
 
+            
+                   
         
-        #SEARCH PHASE
-        search_button.when_activated = searchfunc            
-        
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == search_button_ui:
-                #csv is indexed from 0
-                s = sizeslide.get_current_value()
-                d = distslide.get_current_value()
-                p = denslide.get_current_value()
-                t = tempslide.get_current_value()
-                compare('Worlds_Data_Sheet.csv', s,d,p,t)
-
-
-                planet_name_box.clear()
-                planet_name_box.set_text(planet_name)
-
-                planet_fact_box.clear()
-                planet_fact_box.set_text(planet_text)
-                
-                planet_image = pygame.image.load(planet_image_path).convert()
-                planet_image_box.set_image(planet_image, True)
             
         
 
